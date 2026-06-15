@@ -1,0 +1,415 @@
+@import "tailwindcss";
+
+/*
+ * Hybrid Apple × Spotify design system
+ * - Light/dark tile rhythm via background swaps
+ * - Single accent color (#1ed760) for CTAs only
+ * - SF Pro stack with system fallbacks
+ * - Negative letter-spacing on headlines (Apple Tight)
+ */
+
+:root {
+  /* Surfaces — light */
+  --surface-white: #ffffff;
+  --surface-parchment: #f5f5f7;
+  --surface-pearl: #fafafc;
+
+  /* Surfaces — dark */
+  --surface-near-black: #121212;
+  --surface-dark-1: #181818;
+  --surface-dark-2: #1f1f1f;
+  --surface-pure-black: #000000;
+
+  /* Text */
+  --text-ink: #1d1d1f;
+  --text-white: #ffffff;
+  --text-silver: #b3b3b3;
+  --text-muted: #7a7a7a;
+
+  /* Accent */
+  --accent: #1ed760;
+  --accent-dark: #1db954;
+  --accent-pressed: #17a84a;
+
+  /* Semantic */
+  --error: #f3727f;
+  --warning: #ffa42b;
+  --info: #539df5;
+
+  /* Borders */
+  --hairline: #e0e0e0;
+  --border-gray: #4d4d4d;
+  --divider-soft: rgba(0, 0, 0, 0.04);
+
+  /* Type system */
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", system-ui, sans-serif;
+  --font-text: "SF Pro Text", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Menlo", monospace;
+
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--surface-white);
+  --color-foreground: var(--text-ink);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-pressed: var(--accent-pressed);
+  --color-ink: var(--text-ink);
+  --color-silver: var(--text-silver);
+  --color-muted: var(--text-muted);
+  --color-parchment: var(--surface-parchment);
+  --color-near-black: var(--surface-near-black);
+  --color-dark-1: var(--surface-dark-1);
+  --color-dark-2: var(--surface-dark-2);
+  --color-hairline: var(--hairline);
+  --color-border-gray: var(--border-gray);
+  --font-sans: var(--font-text);
+  --font-mono: var(--font-mono);
+}
+
+html,
+body {
+  background: var(--surface-white);
+  color: var(--text-ink);
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apple Tight headline defaults */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.28px;
+  font-weight: 600;
+}
+h4,
+h5,
+h6 {
+  font-family: var(--font-text);
+  letter-spacing: -0.374px;
+  font-weight: 600;
+}
+
+/* Form controls inherit color (specificity 0 so Tailwind utilities win) */
+:where(input, textarea, select) {
+  color: inherit;
+  font-family: inherit;
+}
+:where(input, textarea, select)::placeholder {
+  color: var(--text-muted);
+}
+
+/* Reset button typography baseline; component classes own the look */
+:where(button) {
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+/* ─── Reusable component classes ─────────────────────────────────── */
+
+/* Pill CTA — Spotify accent, Apple geometry */
+.btn-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #000;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-pill-primary:hover:not(:disabled) {
+  transform: scale(1.02);
+}
+.btn-pill-primary:active:not(:disabled) {
+  transform: scale(0.95);
+  background: var(--accent-pressed);
+}
+.btn-pill-primary:disabled {
+  background: var(--hairline);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Secondary ghost pill */
+.btn-pill-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-ink);
+  border: 1px solid var(--hairline);
+  border-radius: 9999px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease;
+  cursor: pointer;
+}
+.btn-pill-ghost:hover {
+  background: var(--surface-parchment);
+}
+.btn-pill-ghost:active {
+  transform: scale(0.95);
+}
+.btn-pill-ghost.on-dark {
+  color: var(--text-white);
+  border-color: var(--border-gray);
+}
+.btn-pill-ghost.on-dark:hover {
+  background: var(--surface-dark-2);
+}
+
+/* Small dark pill (filters / nav) */
+.btn-dark-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-dark-2);
+  color: var(--text-white);
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+}
+
+/* Utility rect — chips, filters */
+.btn-utility {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-parchment);
+  color: var(--text-ink);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+}
+.btn-utility:hover {
+  background: var(--hairline);
+}
+
+/* Cards */
+.card-light {
+  background: var(--surface-white);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  padding: 24px;
+}
+.card-dark {
+  background: var(--surface-dark-1);
+  color: var(--text-white);
+  border-radius: 8px;
+  padding: 24px;
+  transition: background-color 200ms ease;
+}
+.card-dark:hover {
+  background: var(--surface-dark-2);
+}
+
+/* Tile (full-bleed section background) */
+.tile-light {
+  background: var(--surface-white);
+  color: var(--text-ink);
+}
+.tile-parchment {
+  background: var(--surface-parchment);
+  color: var(--text-ink);
+}
+.tile-dark {
+  background: var(--surface-near-black);
+  color: var(--text-white);
+}
+
+/* Headline scale */
+.t-hero {
+  font-family: var(--font-display);
+  font-size: 56px;
+  line-height: 1.07;
+  letter-spacing: -0.28px;
+  font-weight: 600;
+}
+.t-display-lg {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+.t-display-md {
+  font-family: var(--font-text);
+  font-size: 34px;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  font-weight: 600;
+}
+.t-lead {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.14;
+  letter-spacing: 0.196px;
+  font-weight: 400;
+}
+.t-tagline {
+  font-family: var(--font-text);
+  font-size: 21px;
+  line-height: 1.19;
+  letter-spacing: 0.231px;
+  font-weight: 600;
+}
+.t-body-strong {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.374px;
+}
+.t-body {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+}
+.t-caption {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+}
+.t-caption-strong {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.29;
+  letter-spacing: -0.224px;
+}
+.t-small {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.t-fine {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.12px;
+}
+
+/* Responsive hero scale */
+@media (max-width: 1023px) {
+  .t-hero {
+    font-size: 40px;
+  }
+}
+@media (max-width: 735px) {
+  .t-hero {
+    font-size: 34px;
+  }
+}
+@media (max-width: 419px) {
+  .t-hero {
+    font-size: 28px;
+  }
+}
+
+/* Form inputs in this system */
+.input-base {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--surface-white);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  font-size: 17px;
+  line-height: 1.47;
+  color: var(--text-ink);
+  letter-spacing: -0.374px;
+  transition: border-color 120ms ease;
+  font-family: inherit;
+}
+.input-base:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.input-base.on-dark {
+  background: var(--surface-dark-2);
+  color: var(--text-white);
+  border-color: var(--border-gray);
+}
+.input-base.on-dark:focus {
+  border-color: var(--accent);
+}
+
+/* Print mode (carry over from prior version) */
+@media print {
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  details[open] > summary,
+  details > summary {
+    display: block;
+  }
+  details > div,
+  details > *:not(summary) {
+    display: block !important;
+  }
+  .print-static {
+    position: static !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .print-hide {
+    display: none !important;
+  }
+  .tile-dark {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Report / board export */
+  @page {
+    margin: 14mm;
+  }
+  .report-root {
+    min-height: 0 !important;
+  }
+  .report-doc {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  .report-break {
+    break-before: page;
+    page-break-before: always;
+  }
+  /* Keep image colors/borders when printing to PDF */
+  .report-root * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
