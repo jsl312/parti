@@ -108,4 +108,4 @@ A personal/portfolio project. The UI is currently in Korean; an English UI
 
 ## License
 
-No license yet — all rights reserved by the author until one is added.
+[MIT](LICENSE) © 2026 임준섭 (Junseop Lim). Free to use, modify, and distribute.
