@@ -72,8 +72,8 @@ npm start            # serves the built app on :3000
 On Windows, the included double-click scripts start the server and an
 [ngrok](https://ngrok.com) tunnel for sharing to other devices:
 
-- `서버 실행.bat` — start the server (+ ngrok)
-- `업데이트 후 실행.bat` — rebuild, then start
+- `start-server.bat` — start the server (+ ngrok)
+- `update-and-start.bat` — rebuild, then start
 
 To pin a stable ngrok URL, put your reserved domain on a single line in
 `ngrok-domain.txt` (this file is git-ignored). See [README.ko.md](README.ko.md)

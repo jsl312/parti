@@ -11,7 +11,7 @@ call npm run build
 if errorlevel 1 goto builderror
 
 REM 빌드 성공 후 일반 실행 스크립트로 서버 + ngrok 시작
-call "서버 실행.bat"
+call "start-server.bat"
 goto end
 
 :builderror
